@@ -5,7 +5,7 @@
 - [x] Cài MySQL Server 8.0 và Workbench
 - [x] Tạo database `shop_manager` và user `shop_app`
 - [x] Tạo repo GitHub
-- [ ] Tạo backend Spring Boot, nối database, chạy Flyway
+- [x] Tạo backend Spring Boot, nối database, chạy Flyway
 - [ ] Tạo frontend React, gọi thử API `/api/ping`
 
 ## Giai đoạn 1: Khung dự án

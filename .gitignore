@@ -1,0 +1,18 @@
+# Java / Maven
+target/
+*.class
+*.log
+
+# Node
+node_modules/
+dist/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Bí mật và dữ liệu thật
+.env
+application-local.yml
+*.xlsx

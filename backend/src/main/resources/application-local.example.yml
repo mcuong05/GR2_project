@@ -7,3 +7,6 @@ app:
   bootstrap:
     admin-username: admin
     admin-password: <your-admin-password>
+  security:
+    jwt-secret: "<random-string-at-least-32-chars>"
+    jwt-expiration-minutes: 480

@@ -17,29 +17,34 @@ public class AdminBootstrap implements ApplicationRunner {
     private final PasswordEncoder passwordEncoder;
     private final String adminUsername;
     private final String adminPassword;
+    private final String staffUsername;
+    private final String staffPassword;
 
     public AdminBootstrap(UserRepository userRepository,
                           PasswordEncoder passwordEncoder,
                           @Value("${app.bootstrap.admin-username:admin}") String adminUsername,
-                          @Value("${app.bootstrap.admin-password:}") String adminPassword) {
+                          @Value("${app.bootstrap.admin-password:}") String adminPassword,
+                          @Value("${app.bootstrap.staff-username:staff}") String staffUsername,
+                          @Value("${app.bootstrap.staff-password:}") String staffPassword) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminUsername = adminUsername;
         this.adminPassword = adminPassword;
+        this.staffUsername = staffUsername;
+        this.staffPassword = staffPassword;
     }
 
     @Override
     public void run(ApplicationArguments args) {
-        if (userRepository.count() > 0) {
+        createIfMissing(adminUsername, adminPassword, "Chủ cửa hàng", Role.MANAGER);
+        createIfMissing(staffUsername, staffPassword, "Nhân viên mẫu", Role.STAFF);
+    }
+
+    private void createIfMissing(String username, String password, String fullName, Role role) {
+        if (password == null || password.isBlank() || userRepository.existsByUsername(username)) {
             return;
         }
-        if (adminPassword == null || adminPassword.isBlank()) {
-            log.warn("Chưa có người dùng nào và chưa cấu hình app.bootstrap.admin-password, bỏ qua tạo tài khoản đầu tiên");
-            return;
-        }
-        User admin = new User(adminUsername, passwordEncoder.encode(adminPassword),
-                "Chủ cửa hàng", Role.MANAGER);
-        userRepository.save(admin);
-        log.info("Đã tạo tài khoản quản lý đầu tiên: {}", adminUsername);
+        userRepository.save(new User(username, passwordEncoder.encode(password), fullName, role));
+        log.info("Đã tạo tài khoản {}: {}", role, username);
     }
 }

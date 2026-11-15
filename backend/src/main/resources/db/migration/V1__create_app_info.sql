@@ -1,0 +1,7 @@
+CREATE TABLE app_info (
+    id TINYINT UNSIGNED NOT NULL PRIMARY KEY,
+    app_name VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+INSERT INTO app_info (id, app_name) VALUES (1, 'GR2 Shop Manager');
